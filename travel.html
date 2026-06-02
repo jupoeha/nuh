@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel & Adventure · Everyday Life</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0f1a2e; --blue:#1e3a5f; --sand:#e8ddc8; --gold:#d4a843; --sky:#a8c4d8; --white:#fafbfc; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--white); color:var(--navy); font-family:'DM Sans',sans-serif; font-weight:300; }
+  nav { position:fixed; top:0; width:100%; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 3rem; background:rgba(250,251,252,0.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(15,26,46,0.08); }
+  .logo { font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--navy); text-decoration:none; font-style:italic; }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { text-decoration:none; color:var(--navy); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.6; transition:opacity 0.2s; }
+  .nav-links a:hover,.nav-links a.active { opacity:1; color:var(--gold); }
+
+  /* HERO full bleed */
+  .hero {
+    min-height:100vh; position:relative; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:5rem;
+    background:linear-gradient(160deg, var(--navy) 0%, var(--blue) 50%, #2a5080 100%);
+  }
+  .hero-stars { position:absolute; inset:0; overflow:hidden; }
+  .star { position:absolute; width:2px; height:2px; background:#fff; border-radius:50%; opacity:0.3; animation:twinkle 3s infinite alternate; }
+  @keyframes twinkle { from{opacity:0.2;} to{opacity:0.8;} }
+  .hero-globe { position:absolute; top:5%; right:5%; width:50%; opacity:0.12; font-size:30vw; line-height:1; pointer-events:none; user-select:none; }
+  .hero-content { position:relative; z-index:2; max-width:700px; }
+  .hero-tag { font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:1.5rem; }
+  .hero-h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(3.5rem,7vw,7rem); line-height:1.0; color:var(--white); margin-bottom:1.5rem; font-weight:300; }
+  .hero-h1 em { color:var(--gold); font-style:italic; }
+  .hero-p { color:rgba(255,255,255,0.65); line-height:1.8; max-width:500px; margin-bottom:2.5rem; font-size:1.05rem; }
+  .hero-search { display:flex; background:rgba(255,255,255,0.1); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.2); border-radius:3px; overflow:hidden; max-width:480px; }
+  .hero-search input { flex:1; background:transparent; border:none; padding:1rem 1.2rem; color:#fff; font-family:'DM Sans',sans-serif; font-size:0.9rem; outline:none; }
+  .hero-search input::placeholder { color:rgba(255,255,255,0.4); }
+  .hero-search button { background:var(--gold); border:none; padding:1rem 1.5rem; color:var(--navy); font-weight:500; font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; }
+
+  /* Destinations */
+  .section { padding:5rem; }
+  .section-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2.5rem; }
+  .section-title { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; }
+  .section-title em { color:var(--gold); font-style:italic; }
+  .see-all { font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); text-decoration:none; }
+
+  .dest-grid { display:grid; grid-template-columns:1.6fr 1fr 1fr; grid-template-rows:auto auto; gap:1rem; }
+  .dest-card { position:relative; overflow:hidden; border-radius:3px; cursor:pointer; }
+  .dest-card::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(15,26,46,0.7) 0%, transparent 50%); }
+  .dest-card:hover .dest-bg { transform:scale(1.05); }
+  .dest-bg { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:5rem; transition:transform 0.5s ease; }
+  .dc-main { grid-row:span 2; }
+  .dc-main .dest-bg { height:500px; font-size:8rem; }
+  .dest-bg1 { background:linear-gradient(135deg,#1a4a6e,#0d3050); }
+  .dest-bg2 { background:linear-gradient(135deg,#6b4c30,#3d2b1f); }
+  .dest-bg3 { background:linear-gradient(135deg,#2a5a3a,#1a3a28); }
+  .dest-bg4 { background:linear-gradient(135deg,#4a3060,#2a1840); }
+  .dest-bg5 { background:linear-gradient(135deg,#5a1a1a,#3a0f0f); }
+  .dest-bg { height:240px; }
+  .dest-info { position:absolute; bottom:0; left:0; right:0; padding:1.2rem; z-index:2; }
+  .dest-country { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--gold); margin-bottom:0.3rem; }
+  .dest-city { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:#fff; font-weight:300; }
+  .dc-main .dest-city { font-size:2.2rem; }
+
+  /* Guide strips */
+  .guides { padding:5rem; background:var(--sand); }
+  .guide-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:2.5rem; }
+  .guide-card { background:var(--white); border-radius:3px; padding:2rem; border-bottom:3px solid transparent; transition:border-color 0.3s, transform 0.3s; }
+  .guide-card:hover { border-color:var(--gold); transform:translateY(-3px); }
+  .g-icon { font-size:2rem; margin-bottom:1rem; }
+  .g-title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:600; margin-bottom:0.6rem; }
+  .g-desc { font-size:0.83rem; line-height:1.7; opacity:0.65; }
+
+  /* Packing list */
+  .packing { padding:5rem; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+  .packing .section-title { margin-bottom:1.5rem; }
+  .pack-list { list-style:none; display:flex; flex-direction:column; gap:0.8rem; }
+  .pack-item { display:flex; align-items:center; gap:1rem; padding:0.75rem; border:1px solid rgba(15,26,46,0.08); border-radius:2px; font-size:0.88rem; }
+  .pack-check { width:18px; height:18px; border:1.5px solid var(--gold); border-radius:2px; flex-shrink:0; position:relative; cursor:pointer; }
+  .pack-check.done { background:var(--gold); }
+  .pack-check.done::after { content:'✓'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:0.65rem; color:var(--white); font-weight:bold; }
+
+  footer { padding:2.5rem 5rem; border-top:1px solid rgba(15,26,46,0.08); display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; opacity:0.5; }
+
+  @media(max-width:900px){
+    .hero{padding:7rem 2rem 3rem;}
+    .dest-grid{grid-template-columns:1fr 1fr;}
+    .dc-main{grid-row:span 1; grid-column:span 2;}
+    .dc-main .dest-bg{height:280px;}
+    .section{padding:3rem 2rem;}
+    .guides{padding:3rem 2rem;}
+    .guide-grid{grid-template-columns:1fr;}
+    .packing{grid-template-columns:1fr;padding:3rem 2rem;}
+    nav{padding:1rem 1.5rem;}
+    .nav-links{display:none;}
+    footer{flex-direction:column;gap:1rem;padding:2rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Everyday Life</a>
+  <ul class="nav-links">
+    <li><a href="/cooking">Cooking</a></li>
+    <li><a href="/fitness">Fitness</a></li>
+    <li><a href="/travel" class="active">Travel</a></li>
+    <li><a href="/mindfulness">Mindfulness</a></li>
+    <li><a href="/home">Home</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-stars" id="stars"></div>
+  <div class="hero-globe">🌍</div>
+  <div class="hero-content">
+    <div class="hero-tag">✈️ Travel & Adventure</div>
+    <h1 class="hero-h1">The world<br>is your <em>home.</em></h1>
+    <p class="hero-p">Every journey changes you. Find your next destination, pack smarter, and travel with intention and wonder.</p>
+    <div class="hero-search">
+      <input type="text" placeholder="Search destinations, tips, guides...">
+      <button>Explore</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2 class="section-title">Top <em>Destinations</em></h2>
+    <a href="#" class="see-all">All Destinations →</a>
+  </div>
+  <div class="dest-grid">
+    <div class="dest-card dc-main">
+      <div class="dest-bg dest-bg1" style="height:500px;">🗼</div>
+      <div class="dest-info">
+        <div class="dest-country">France · Europe</div>
+        <div class="dest-city">Paris</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg dest-bg2">🏯</div>
+      <div class="dest-info">
+        <div class="dest-country">Japan · Asia</div>
+        <div class="dest-city">Kyoto</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg dest-bg3">🌿</div>
+      <div class="dest-info">
+        <div class="dest-country">Costa Rica · Americas</div>
+        <div class="dest-city">San José</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg dest-bg4">🕌</div>
+      <div class="dest-info">
+        <div class="dest-country">Morocco · Africa</div>
+        <div class="dest-city">Marrakech</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg dest-bg5">🏛️</div>
+      <div class="dest-info">
+        <div class="dest-country">Greece · Europe</div>
+        <div class="dest-city">Santorini</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="guides">
+  <div class="section-header">
+    <h2 class="section-title">Travel <em>Guides</em></h2>
+    <a href="#" class="see-all">All Guides →</a>
+  </div>
+  <div class="guide-grid">
+    <div class="guide-card">
+      <div class="g-icon">🎒</div>
+      <div class="g-title">Pack Light, Travel Far</div>
+      <div class="g-desc">Master the art of carry-on travel. Our minimalist packing system fits 2 weeks into one bag.</div>
+    </div>
+    <div class="guide-card">
+      <div class="g-icon">💰</div>
+      <div class="g-title">Budget Travel Mastery</div>
+      <div class="g-desc">Sleep well, eat great, and see the world without emptying your savings account.</div>
+    </div>
+    <div class="guide-card">
+      <div class="g-icon">🗣️</div>
+      <div class="g-title">Speak Like a Local</div>
+      <div class="g-desc">20 phrases that unlock genuine hospitality in any country you visit.</div>
+    </div>
+    <div class="guide-card">
+      <div class="g-icon">✈️</div>
+      <div class="g-title">Finding Cheap Flights</div>
+      <div class="g-desc">Timing, tools, and tricks that slash airfare by 40% or more on any route.</div>
+    </div>
+    <div class="guide-card">
+      <div class="g-icon">🛡️</div>
+      <div class="g-title">Stay Safe Anywhere</div>
+      <div class="g-desc">Practical safety habits that let you explore confidently in unfamiliar places.</div>
+    </div>
+    <div class="guide-card">
+      <div class="g-icon">📷</div>
+      <div class="g-title">Travel Photography 101</div>
+      <div class="g-desc">Capture memories that actually look as beautiful as the moment felt.</div>
+    </div>
+  </div>
+</section>
+
+<section class="packing">
+  <div>
+    <h2 class="section-title">Essential <em>Packing</em> List</h2>
+    <p style="opacity:0.6;line-height:1.8;max-width:380px;">Everything you need for a week-long trip, curated for maximum versatility and minimum weight.</p>
+  </div>
+  <ul class="pack-list">
+    <li class="pack-item"><span class="pack-check done"></span> Passport & travel documents</li>
+    <li class="pack-item"><span class="pack-check done"></span> Universal power adapter</li>
+    <li class="pack-item"><span class="pack-check done"></span> Noise-cancelling headphones</li>
+    <li class="pack-item"><span class="pack-check"></span> Portable charger (20,000 mAh)</li>
+    <li class="pack-item"><span class="pack-check"></span> Lightweight rain jacket</li>
+    <li class="pack-item"><span class="pack-check done"></span> First aid & medication kit</li>
+    <li class="pack-item"><span class="pack-check"></span> Microfiber travel towel</li>
+    <li class="pack-item"><span class="pack-check"></span> Reusable water bottle</li>
+    <li class="pack-item"><span class="pack-check done"></span> Travel insurance documents</li>
+    <li class="pack-item"><span class="pack-check"></span> Offline maps downloaded</li>
+  </ul>
+</section>
+
+<footer>
+  <span>© 2025 Everyday Life · Travel & Adventure</span>
+  <a href="/" style="color:var(--gold);text-decoration:none;opacity:1;">← Back to Home</a>
+</footer>
+
+<script>
+  const stars = document.getElementById('stars');
+  for(let i=0;i<60;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=Math.random()*3+'s';
+    s.style.animationDuration=(2+Math.random()*3)+'s';
+    stars.appendChild(s);
+  }
+</script>
+</body>
+</html>

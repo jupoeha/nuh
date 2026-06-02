@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness & Health · Everyday Life</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --black:#0e0f0d; --dark:#1a1c18; --green:#4caf50; --lime:#b5d44a; --cream:#f5f0e8; --gray:#888; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--black); color:var(--cream); font-family:'DM Sans',sans-serif; font-weight:300; }
+  nav { position:fixed; top:0; width:100%; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 3rem; background:rgba(14,15,13,0.9); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,0.06); }
+  .logo { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--lime); text-decoration:none; letter-spacing:0.08em; }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { text-decoration:none; color:var(--cream); font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; opacity:0.5; transition:opacity 0.2s, color 0.2s; }
+  .nav-links a:hover,.nav-links a.active { opacity:1; color:var(--lime); }
+
+  .hero {
+    min-height:100vh; padding:9rem 5rem 5rem;
+    display:grid; grid-template-columns:1.2fr 0.8fr; gap:3rem; align-items:center;
+    position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-10%; right:-5%;
+    width:55%; height:120%;
+    background:radial-gradient(ellipse at center, rgba(76,175,80,0.1) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-tag { font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--lime); margin-bottom:1.2rem; }
+  .hero-h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(4rem,8vw,8rem); line-height:0.95; letter-spacing:0.03em; margin-bottom:1.5rem; }
+  .hero-h1 .accent { color:var(--lime); }
+  .hero-p { line-height:1.8; opacity:0.6; max-width:440px; margin-bottom:2.5rem; }
+  .cta-row { display:flex; gap:1rem; align-items:center; }
+  .btn-lime { background:var(--lime); color:var(--black); padding:0.9rem 2.2rem; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; font-weight:500; border-radius:2px; transition:opacity 0.2s; }
+  .btn-lime:hover { opacity:0.85; }
+  .btn-ghost { border:1px solid rgba(255,255,255,0.2); color:var(--cream); padding:0.9rem 2rem; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; border-radius:2px; transition:border-color 0.2s; }
+  .btn-ghost:hover { border-color:var(--lime); color:var(--lime); }
+  .hero-panel { display:flex; flex-direction:column; gap:1rem; }
+  .stat-box { background:var(--dark); border:1px solid rgba(255,255,255,0.06); border-radius:4px; padding:1.5rem; display:flex; gap:1rem; align-items:center; }
+  .stat-box .icon { font-size:2rem; }
+  .stat-box .num { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; color:var(--lime); line-height:1; }
+  .stat-box .label { font-size:0.75rem; opacity:0.5; text-transform:uppercase; letter-spacing:0.08em; }
+  .prog-bar { height:4px; background:rgba(255,255,255,0.1); border-radius:2px; margin-top:0.5rem; }
+  .prog-fill { height:100%; border-radius:2px; background:var(--lime); }
+
+  .section { padding:5rem; }
+  .section-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2.5rem; }
+  .section-title { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; letter-spacing:0.05em; }
+  .section-title .acc { color:var(--lime); }
+  .see-all { font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--lime); text-decoration:none; }
+
+  .workout-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  .workout-card { background:var(--dark); border:1px solid rgba(255,255,255,0.06); border-radius:4px; overflow:hidden; transition:border-color 0.3s, transform 0.3s; }
+  .workout-card:hover { border-color:var(--lime); transform:translateY(-4px); }
+  .workout-banner { padding:2rem; font-size:4rem; display:flex; align-items:center; justify-content:center; }
+  .wb1 { background:linear-gradient(135deg,rgba(76,175,80,0.2),rgba(76,175,80,0.05)); }
+  .wb2 { background:linear-gradient(135deg,rgba(181,212,74,0.2),rgba(181,212,74,0.05)); }
+  .wb3 { background:linear-gradient(135deg,rgba(255,152,0,0.2),rgba(255,152,0,0.05)); }
+  .wb4 { background:linear-gradient(135deg,rgba(33,150,243,0.2),rgba(33,150,243,0.05)); }
+  .wb5 { background:linear-gradient(135deg,rgba(156,39,176,0.2),rgba(156,39,176,0.05)); }
+  .wb6 { background:linear-gradient(135deg,rgba(244,67,54,0.2),rgba(244,67,54,0.05)); }
+  .workout-body { padding:1.4rem; }
+  .w-level { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--lime); margin-bottom:0.5rem; }
+  .w-name { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.05em; margin-bottom:0.8rem; }
+  .w-meta { display:flex; gap:1.2rem; font-size:0.75rem; opacity:0.5; }
+
+  /* Schedule */
+  .schedule-section { padding:5rem; background:var(--dark); }
+  .schedule-title { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; letter-spacing:0.05em; margin-bottom:2rem; }
+  .schedule-title .acc { color:var(--lime); }
+  .week-row { display:grid; grid-template-columns:repeat(7,1fr); gap:0.8rem; }
+  .day-box { border:1px solid rgba(255,255,255,0.08); border-radius:3px; padding:1.2rem 0.8rem; text-align:center; transition:border-color 0.2s; }
+  .day-box:hover { border-color:var(--lime); }
+  .day-box.rest { opacity:0.4; }
+  .day-box.rest:hover { opacity:0.6; }
+  .day-name-s { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--lime); margin-bottom:0.8rem; }
+  .day-workout { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:0.04em; }
+  .day-icon { font-size:1.6rem; display:block; margin:0.5rem 0; }
+  .day-dur { font-size:0.7rem; opacity:0.5; margin-top:0.4rem; }
+
+  /* Tips */
+  .tips { padding:5rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+  .tip-list { list-style:none; display:flex; flex-direction:column; gap:1.2rem; }
+  .tip-item { display:flex; gap:1rem; align-items:flex-start; padding:1rem; border-left:2px solid var(--lime); }
+  .tip-item .tip-icon { font-size:1.3rem; flex-shrink:0; }
+  .tip-item .tip-text strong { display:block; font-weight:500; margin-bottom:0.25rem; font-size:0.92rem; }
+  .tip-item .tip-text span { font-size:0.82rem; opacity:0.6; line-height:1.6; }
+
+  footer { padding:2.5rem 5rem; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; opacity:0.4; }
+  footer a { color:var(--lime); text-decoration:none; opacity:2; }
+
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;padding:7rem 2rem 3rem;}
+    .section{padding:3rem 2rem;}
+    .workout-grid{grid-template-columns:1fr 1fr;}
+    .schedule-section{padding:3rem 2rem;}
+    .week-row{grid-template-columns:repeat(4,1fr);}
+    .tips{grid-template-columns:1fr;padding:3rem 2rem;}
+    nav{padding:1rem 1.5rem;}
+    .nav-links{display:none;}
+    footer{flex-direction:column;gap:1rem;padding:2rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Everyday Life</a>
+  <ul class="nav-links">
+    <li><a href="/cooking">Cooking</a></li>
+    <li><a href="/fitness" class="active">Fitness</a></li>
+    <li><a href="/travel">Travel</a></li>
+    <li><a href="/mindfulness">Mindfulness</a></li>
+    <li><a href="/home">Home</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-tag">💪 Fitness & Health</div>
+    <h1 class="hero-h1">MOVE.<br><span class="accent">GROW.</span><br>THRIVE.</h1>
+    <p class="hero-p">Build real strength, develop lasting habits, and discover what your body is truly capable of — one workout at a time.</p>
+    <div class="cta-row">
+      <a href="#workouts" class="btn-lime">Start Today</a>
+      <a href="#schedule" class="btn-ghost">View Schedule</a>
+    </div>
+  </div>
+  <div class="hero-panel">
+    <div class="stat-box">
+      <span class="icon">🔥</span>
+      <div>
+        <div class="num">2,480</div>
+        <div class="label">Calories burned this week</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:72%"></div></div>
+      </div>
+    </div>
+    <div class="stat-box">
+      <span class="icon">⚡</span>
+      <div>
+        <div class="num">5/7</div>
+        <div class="label">Workout days completed</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:71%"></div></div>
+      </div>
+    </div>
+    <div class="stat-box">
+      <span class="icon">💧</span>
+      <div>
+        <div class="num">2.1L</div>
+        <div class="label">Hydration today</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:84%"></div></div>
+      </div>
+    </div>
+    <div class="stat-box">
+      <span class="icon">😴</span>
+      <div>
+        <div class="num">7.5h</div>
+        <div class="label">Sleep last night</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:90%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="workouts">
+  <div class="section-header">
+    <h2 class="section-title">FEATURED <span class="acc">WORKOUTS</span></h2>
+    <a href="#" class="see-all">All Plans →</a>
+  </div>
+  <div class="workout-grid">
+    <div class="workout-card">
+      <div class="workout-banner wb1">🏋️</div>
+      <div class="workout-body">
+        <div class="w-level">Beginner · Strength</div>
+        <div class="w-name">Full Body Foundations</div>
+        <div class="w-meta"><span>⏱ 30 min</span><span>📦 No equipment</span></div>
+      </div>
+    </div>
+    <div class="workout-card">
+      <div class="workout-banner wb2">🏃</div>
+      <div class="workout-body">
+        <div class="w-level">Intermediate · Cardio</div>
+        <div class="w-name">5K Run & Breathe</div>
+        <div class="w-meta"><span>⏱ 45 min</span><span>🌿 Outdoors</span></div>
+      </div>
+    </div>
+    <div class="workout-card">
+      <div class="workout-banner wb3">🧘</div>
+      <div class="workout-body">
+        <div class="w-level">All Levels · Flexibility</div>
+        <div class="w-name">Morning Yoga Flow</div>
+        <div class="w-meta"><span>⏱ 20 min</span><span>🌅 Daily</span></div>
+      </div>
+    </div>
+    <div class="workout-card">
+      <div class="workout-banner wb4">🚴</div>
+      <div class="workout-body">
+        <div class="w-level">Advanced · Endurance</div>
+        <div class="w-name">HIIT Cycling Blast</div>
+        <div class="w-meta"><span>⏱ 40 min</span><span>🔥 High intensity</span></div>
+      </div>
+    </div>
+    <div class="workout-card">
+      <div class="workout-banner wb5">🤸</div>
+      <div class="workout-body">
+        <div class="w-level">Beginner · Mobility</div>
+        <div class="w-name">Hip & Back Relief</div>
+        <div class="w-meta"><span>⏱ 25 min</span><span>🛋️ At home</span></div>
+      </div>
+    </div>
+    <div class="workout-card">
+      <div class="workout-banner wb6">💪</div>
+      <div class="workout-body">
+        <div class="w-level">Advanced · Strength</div>
+        <div class="w-name">Push-Pull-Legs Split</div>
+        <div class="w-meta"><span>⏱ 60 min</span><span>🏋️ Gym required</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="schedule-section" id="schedule">
+  <h2 class="schedule-title">WEEKLY <span class="acc">SCHEDULE</span></h2>
+  <div class="week-row">
+    <div class="day-box"><div class="day-name-s">Mon</div><span class="day-icon">💪</span><div class="day-workout">Strength</div><div class="day-dur">45 min</div></div>
+    <div class="day-box"><div class="day-name-s">Tue</div><span class="day-icon">🏃</span><div class="day-workout">Cardio Run</div><div class="day-dur">30 min</div></div>
+    <div class="day-box"><div class="day-name-s">Wed</div><span class="day-icon">🧘</span><div class="day-workout">Yoga</div><div class="day-dur">20 min</div></div>
+    <div class="day-box"><div class="day-name-s">Thu</div><span class="day-icon">🏋️</span><div class="day-workout">Upper Body</div><div class="day-dur">50 min</div></div>
+    <div class="day-box"><div class="day-name-s">Fri</div><span class="day-icon">🚴</span><div class="day-workout">HIIT Cycle</div><div class="day-dur">40 min</div></div>
+    <div class="day-box rest"><div class="day-name-s">Sat</div><span class="day-icon">🌿</span><div class="day-workout">Active Rest</div><div class="day-dur">Walk</div></div>
+    <div class="day-box rest"><div class="day-name-s">Sun</div><span class="day-icon">😴</span><div class="day-workout">Rest Day</div><div class="day-dur">Recovery</div></div>
+  </div>
+</section>
+
+<section class="tips">
+  <div>
+    <h2 class="section-title">TRAINING <span class="acc">TIPS</span></h2>
+    <p style="opacity:0.6;line-height:1.8;margin-top:1rem;max-width:380px;">The fundamentals never go out of style. Master these basics and everything else falls into place.</p>
+  </div>
+  <ul class="tip-list">
+    <li class="tip-item">
+      <span class="tip-icon">🌙</span>
+      <div class="tip-text"><strong>Sleep is your biggest gains tool</strong><span>Muscles grow during rest, not during workouts. Aim for 7–9 hours consistently.</span></div>
+    </li>
+    <li class="tip-item">
+      <span class="tip-icon">🥩</span>
+      <div class="tip-text"><strong>Hit your protein targets</strong><span>0.7–1g per pound of bodyweight supports muscle repair and growth.</span></div>
+    </li>
+    <li class="tip-item">
+      <span class="tip-icon">📈</span>
+      <div class="tip-text"><strong>Progressive overload is the key</strong><span>Add a little more weight, reps, or time each week. Small gains compound massively.</span></div>
+    </li>
+    <li class="tip-item">
+      <span class="tip-icon">🧊</span>
+      <div class="tip-text"><strong>Don't skip your warm-up</strong><span>10 minutes of dynamic stretching reduces injury risk and improves performance.</span></div>
+    </li>
+  </ul>
+</section>
+
+<footer>
+  <span>© 2025 Everyday Life · Fitness & Health</span>
+  <a href="/">← Back to Home</a>
+</footer>
+
+</body>
+</html>

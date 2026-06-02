@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mindfulness & Rest · Everyday Life</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root { --lavender:#e8e4f0; --sage:#d4e0d0; --blush:#f0e4e0; --plum:#4a3060; --dusk:#7a6890; --mist:#f5f3f8; --green:#5a7a58; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--mist); color:var(--plum); font-family:'DM Sans',sans-serif; font-weight:300; }
+  nav { position:fixed; top:0; width:100%; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 3rem; background:rgba(245,243,248,0.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(74,48,96,0.08); }
+  .logo { font-family:'Lora',serif; font-size:1.4rem; color:var(--plum); text-decoration:none; font-style:italic; }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { text-decoration:none; color:var(--plum); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.6; transition:opacity 0.2s; }
+  .nav-links a:hover,.nav-links a.active { opacity:1; }
+
+  /* HERO */
+  .hero {
+    min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+    padding:9rem 5rem 5rem; text-align:center; position:relative; overflow:hidden;
+  }
+  .hero-bg-rings { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+  .ring { position:absolute; border-radius:50%; border:1px solid rgba(74,48,96,0.07); animation:expand 8s infinite linear; }
+  .ring:nth-child(1) { width:200px;height:200px; animation-delay:0s; }
+  .ring:nth-child(2) { width:400px;height:400px; animation-delay:2s; }
+  .ring:nth-child(3) { width:600px;height:600px; animation-delay:4s; }
+  .ring:nth-child(4) { width:800px;height:800px; animation-delay:6s; }
+  @keyframes expand { from{opacity:0.5; transform:scale(0.95);} to{opacity:0; transform:scale(1.05);} }
+  .hero-inner { position:relative; z-index:2; }
+  .hero-tag { font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--dusk); margin-bottom:1.5rem; }
+  .hero-h1 { font-family:'Lora',serif; font-size:clamp(3rem,5vw,5.5rem); line-height:1.15; color:var(--plum); margin-bottom:1.5rem; font-weight:400; }
+  .hero-h1 em { color:var(--dusk); font-style:italic; }
+  .hero-p { font-size:1.1rem; line-height:1.9; opacity:0.7; max-width:520px; margin:0 auto 2.5rem; }
+  .breath-btn {
+    display:inline-block; width:120px; height:120px; border-radius:50%;
+    background:linear-gradient(135deg, var(--lavender), var(--sage));
+    border:none; cursor:pointer; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--plum); font-family:'DM Sans',sans-serif; font-weight:400;
+    animation:breathe 4s ease-in-out infinite; transition:transform 0.2s;
+    box-shadow: 0 0 40px rgba(122,104,144,0.2);
+  }
+  @keyframes breathe { 0%,100%{transform:scale(1); box-shadow:0 0 30px rgba(122,104,144,0.15);} 50%{transform:scale(1.12); box-shadow:0 0 60px rgba(122,104,144,0.3);} }
+  .breath-label { font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; opacity:0.5; margin-top:1.5rem; display:block; animation:breathe-text 4s ease-in-out infinite; }
+  @keyframes breathe-text { 0%,100%{content:'Breathe in…';} 50%{content:'Breathe out…';} }
+
+  .section { padding:5rem; }
+  .section-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2.5rem; }
+  .section-title { font-family:'Lora',serif; font-size:2.2rem; font-weight:400; }
+  .section-title em { color:var(--dusk); font-style:italic; }
+  .see-all { font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--dusk); text-decoration:none; }
+
+  /* Practice Cards */
+  .practice-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  .practice-card { background:#fff; border-radius:8px; padding:2rem; border:1px solid rgba(74,48,96,0.07); transition:transform 0.3s, box-shadow 0.3s; }
+  .practice-card:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(74,48,96,0.1); }
+  .pc-icon { font-size:2.5rem; margin-bottom:1.2rem; display:block; }
+  .pc-name { font-family:'Lora',serif; font-size:1.15rem; margin-bottom:0.6rem; }
+  .pc-desc { font-size:0.83rem; line-height:1.75; opacity:0.65; margin-bottom:1rem; }
+  .pc-tag { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--dusk); }
+
+  /* Journal */
+  .journal { padding:5rem; background:var(--lavender); }
+  .journal-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+  .journal .section-title { margin-bottom:1.5rem; }
+  .prompt-list { display:flex; flex-direction:column; gap:1rem; }
+  .prompt { background:#fff; border-radius:4px; padding:1.2rem 1.4rem; font-family:'Lora',serif; font-size:0.95rem; font-style:italic; line-height:1.6; color:var(--plum); border-left:3px solid var(--dusk); }
+
+  /* Sleep ritual */
+  .sleep { padding:5rem; background:linear-gradient(160deg, #2a1840 0%, var(--plum) 100%); color:#fff; }
+  .sleep .section-title { color:#fff; }
+  .sleep .section-title em { color:#b8a0d0; }
+  .sleep-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin-top:2.5rem; }
+  .sleep-step { text-align:center; padding:1.5rem 1rem; }
+  .ss-time { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.12em; color:#b8a0d0; margin-bottom:0.8rem; }
+  .ss-icon { font-size:2.5rem; margin-bottom:0.8rem; display:block; }
+  .ss-name { font-family:'Lora',serif; font-size:1rem; margin-bottom:0.4rem; }
+  .ss-desc { font-size:0.78rem; opacity:0.55; line-height:1.6; }
+
+  footer { padding:2.5rem 5rem; border-top:1px solid rgba(74,48,96,0.1); display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; opacity:0.5; }
+  footer a { color:var(--dusk); text-decoration:none; opacity:2; }
+
+  @media(max-width:900px){
+    .hero{padding:7rem 2rem 3rem;}
+    .section{padding:3rem 2rem;}
+    .practice-grid{grid-template-columns:1fr 1fr;}
+    .journal{padding:3rem 2rem;}
+    .journal-grid{grid-template-columns:1fr;}
+    .sleep{padding:3rem 2rem;}
+    .sleep-steps{grid-template-columns:1fr 1fr;}
+    nav{padding:1rem 1.5rem;}
+    .nav-links{display:none;}
+    footer{flex-direction:column;gap:1rem;padding:2rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Everyday Life</a>
+  <ul class="nav-links">
+    <li><a href="/cooking">Cooking</a></li>
+    <li><a href="/fitness">Fitness</a></li>
+    <li><a href="/travel">Travel</a></li>
+    <li><a href="/mindfulness" class="active">Mindfulness</a></li>
+    <li><a href="/home">Home</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-rings">
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-tag">🧘 Mindfulness & Rest</div>
+    <h1 class="hero-h1">Be here.<br>Be <em>still.</em><br>Be whole.</h1>
+    <p class="hero-p">In a world that never stops, the most radical act is to pause. Find practices that bring you back to yourself.</p>
+    <button class="breath-btn" id="breathBtn">Breathe</button>
+    <span class="breath-label" id="breathLabel">Breathe in…</span>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2 class="section-title">Daily <em>Practices</em></h2>
+    <a href="#" class="see-all">All Guides →</a>
+  </div>
+  <div class="practice-grid">
+    <div class="practice-card">
+      <span class="pc-icon">🧘</span>
+      <div class="pc-name">Meditation for Beginners</div>
+      <div class="pc-desc">Start with just 5 minutes. Sit comfortably, follow your breath, and gently return when the mind wanders.</div>
+      <div class="pc-tag">⏱ 5–20 min · Daily</div>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon">📓</span>
+      <div class="pc-name">Morning Journaling</div>
+      <div class="pc-desc">Three pages of stream-of-consciousness writing each morning clears mental clutter and sharpens focus for the day.</div>
+      <div class="pc-tag">⏱ 15 min · Morning</div>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon">🌬️</span>
+      <div class="pc-name">Box Breathing</div>
+      <div class="pc-desc">Inhale 4 counts, hold 4, exhale 4, hold 4. Repeat four times to calm your nervous system in minutes.</div>
+      <div class="pc-tag">⏱ 4 min · Anytime</div>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon">🚶</span>
+      <div class="pc-name">Mindful Walking</div>
+      <div class="pc-desc">Leave your phone behind. Notice five things you see, four you can touch, three you can hear, two you can smell.</div>
+      <div class="pc-tag">⏱ 20 min · Outdoors</div>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon">🙏</span>
+      <div class="pc-name">Gratitude Practice</div>
+      <div class="pc-desc">Write three specific things you're grateful for each evening. The more specific, the more powerful the effect.</div>
+      <div class="pc-tag">⏱ 5 min · Evening</div>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon">🌿</span>
+      <div class="pc-name">Digital Detox Hour</div>
+      <div class="pc-desc">One hour every evening without screens. Read, stretch, cook, or simply sit. Your sleep will thank you.</div>
+      <div class="pc-tag">⏱ 60 min · Evening</div>
+    </div>
+  </div>
+</section>
+
+<section class="journal">
+  <div class="journal-grid">
+    <div>
+      <h2 class="section-title">Journal <em>Prompts</em></h2>
+      <p style="opacity:0.7;line-height:1.8;margin-top:1rem;max-width:380px;">Writing is thinking made visible. These prompts help you explore what matters most to you right now.</p>
+    </div>
+    <div class="prompt-list">
+      <div class="prompt">"What would I do today if I knew I couldn't fail?"</div>
+      <div class="prompt">"What am I holding onto that I should gently let go?"</div>
+      <div class="prompt">"When did I last feel completely at peace? What was different about that moment?"</div>
+      <div class="prompt">"What does my ideal ordinary Tuesday look like?"</div>
+      <div class="prompt">"Who in my life deserves more of my attention and gratitude?"</div>
+    </div>
+  </div>
+</section>
+
+<section class="sleep">
+  <h2 class="section-title">The <em>Sleep Ritual</em></h2>
+  <div class="sleep-steps">
+    <div class="sleep-step">
+      <div class="ss-time">9:00 PM</div>
+      <span class="ss-icon">📱</span>
+      <div class="ss-name">Screens Off</div>
+      <div class="ss-desc">Put the phone down. Blue light disrupts melatonin for 2 hours.</div>
+    </div>
+    <div class="sleep-step">
+      <div class="ss-time">9:15 PM</div>
+      <span class="ss-icon">🛁</span>
+      <div class="ss-name">Warm Bath</div>
+      <div class="ss-desc">A 10-minute warm bath drops core body temperature, signaling sleep.</div>
+    </div>
+    <div class="sleep-step">
+      <div class="ss-time">9:45 PM</div>
+      <span class="ss-icon">📖</span>
+      <div class="ss-name">Read Fiction</div>
+      <div class="ss-desc">30 minutes of light reading relaxes the analytical mind.</div>
+    </div>
+    <div class="sleep-step">
+      <div class="ss-time">10:30 PM</div>
+      <span class="ss-icon">🌙</span>
+      <div class="ss-name">Lights Out</div>
+      <div class="ss-desc">Cool, dark room (65–68°F). Same time every night. That's the secret.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Everyday Life · Mindfulness & Rest</span>
+  <a href="/">← Back to Home</a>
+</footer>
+
+<script>
+  const btn = document.getElementById('breathBtn');
+  const label = document.getElementById('breathLabel');
+  let phase = 0;
+  const phases = ['Breathe in…', 'Hold…', 'Breathe out…', 'Hold…'];
+  setInterval(() => {
+    phase = (phase + 1) % 4;
+    label.textContent = phases[phase];
+  }, 4000);
+</script>
+</body>
+</html>
