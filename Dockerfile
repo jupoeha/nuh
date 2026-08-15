@@ -7,7 +7,6 @@ COPY app.py index.html ./
 EXPOSE 3000
 
 RUN apk update && apk --no-cache add openssl bash curl &&\
-    chmod +x app.py &&\
-    pip install -r requirements.txt
+    chmod +x app.py
     
 CMD ["python3", "app.py"]
