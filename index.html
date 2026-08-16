@@ -3,24 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to Nexus - Modern solutions for your digital growth.">
-    <title>Nexus | Modern Solutions</title>
+    <title>Alex Rivera | Software Engineer & Creative Technologist</title>
+    <meta name="description" content="Personal blog and portfolio of Alex Rivera, focusing on software engineering, web performance, and modern architecture.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        /* CSS Reset & Global Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #182238;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #38bdf8;
+            --accent-hover: #7dd3fc;
+            --accent-glow: rgba(56, 189, 248, 0.15);
+            --border: #334155;
+            --border-light: #475569;
+            --tag-bg: rgba(56, 189, 248, 0.1);
+            --tag-text: #38bdf8;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-serif: 'Lora', Georgia, serif;
+            --max-width: 1100px;
         }
 
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e293b;
-            --light-bg: #f8fafc;
-            --text-dark: #334155;
-            --text-light: #ffffff;
-            --accent-color: #3b82f6;
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --accent-glow: rgba(2, 132, 199, 0.1);
+            --border: #e2e8f0;
+            --border-light: #cbd5e1;
+            --tag-bg: #e0f2fe;
+            --tag-text: #0369a1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         html {
@@ -28,317 +56,715 @@
         }
 
         body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
             line-height: 1.6;
-            color: var(--text-dark);
-            background-color: #ffffff;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         a {
-            text-decoration: none;
             color: inherit;
+            text-decoration: none;
+            transition: color 0.2s ease;
         }
 
-        ul {
-            list-style: none;
-        }
-
+        /* Layout */
         .container {
-            max-width: 1200px;
+            max-width: var(--max-width);
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 2rem;
         }
 
-        /* Header & Navigation */
+        /* Header / Navbar */
         header {
-            background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
+            position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 100;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
-        .navbar {
+        [data-theme="light"] header {
+            background-color: rgba(248, 250, 252, 0.85);
+        }
+
+        .nav-wrapper {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 70px;
+            height: 4.5rem;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .nav-menu {
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
             display: flex;
-            gap: 30px;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .nav-link {
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
             font-weight: 500;
-            transition: color 0.3s ease;
+            color: var(--text-secondary);
         }
 
-        .nav-link:hover {
-            color: var(--primary-color);
+        .nav-links a:hover {
+            color: var(--accent);
         }
 
-        .btn-cta {
-            background-color: var(--primary-color);
-            color: var(--text-light);
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            width: 2.5rem;
+            height: 2.5rem;
         }
 
-        .btn-cta:hover {
-            background-color: var(--accent-color);
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         /* Hero Section */
         .hero {
-            padding: 160px 0 100px;
-            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+            padding: 5rem 0 4rem;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-content h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h1 .highlight {
+            color: var(--accent);
+        }
+
+        .hero-bio {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-family: var(--font-serif);
+            line-height: 1.7;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.35rem 0.85rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--border-light);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .social-icon:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .avatar-wrapper {
+            position: relative;
             text-align: center;
         }
 
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: var(--secondary-color);
+        .avatar {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .hero p {
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            color: #64748b;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background-color: var(--light-bg);
+        /* Main Content Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3.5rem;
+            padding: 4rem 0;
         }
 
         .section-title {
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 50px;
-            color: var(--secondary-color);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        /* About Section */
-        .about {
-            padding: 80px 0;
-        }
-
-        .about-content {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 50px;
-            flex-wrap: wrap;
+            justify-content: space-between;
         }
 
-        .about-text {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .about-text p {
-            margin-bottom: 15px;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 80px 0;
-            background-color: var(--light-bg);
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
+        .section-title a {
+            font-size: 0.9rem;
+            color: var(--accent);
             font-weight: 500;
         }
 
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            font-size: 16px;
+        /* Featured Post */
+        .featured-post {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
-        .form-group textarea {
-            resize: vertical;
-            height: 120px;
+        .featured-post:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
         }
 
-        .btn-submit {
-            width: 100%;
-            background-color: var(--primary-color);
-            color: var(--text-light);
-            padding: 12px;
-            border: none;
+        .featured-content {
+            padding: 2rem;
+        }
+
+        .post-tag {
+            display: inline-block;
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 0.25rem 0.75rem;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 0.8rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
         }
 
-        .btn-submit:hover {
-            background-color: var(--accent-color);
+        .featured-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.75rem;
+        }
+
+        .featured-excerpt {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Recent Posts Stream */
+        .posts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .post-card {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            transition: transform 0.2s ease;
+        }
+
+        .post-card:last-child {
+            border-bottom: none;
+        }
+
+        .post-card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .post-card-title a:hover {
+            color: var(--accent);
+        }
+
+        .post-card-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Sidebar Elements */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .widget {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .widget-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Projects List */
+        .project-item {
+            margin-bottom: 1.25rem;
+        }
+
+        .project-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .project-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Tags Cloud */
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag-item {
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .tag-item:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background-color: var(--tag-bg);
+        }
+
+        /* Newsletter Widget */
+        .newsletter-form input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            outline: none;
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--accent);
+            color: #0f172a;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
         }
 
         /* Footer */
         footer {
-            background-color: var(--secondary-color);
-            color: var(--text-light);
-            text-align: center;
-            padding: 20px 0;
-            font-size: 14px;
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            margin-top: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
             }
 
-            .nav-menu {
-                display: none; /* Can be expanded into a mobile menu with JavaScript */
+            .hero-meta {
+                justify-content: center;
+            }
+
+            .avatar-wrapper {
+                order: -1;
+            }
+
+            .avatar {
+                width: 160px;
+                height: 160px;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 1.25rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none; /* Can be enhanced with mobile menu */
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation Header -->
+    <!-- Header / Navigation -->
     <header>
-        <div class="container navbar">
-            <a href="#" class="logo">Nexus.</a>
-            <ul class="nav-menu">
-                <li><a href="#hero" class="nav-link">Home</a></li>
-                <li><a href="#features" class="nav-link">Features</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <a href="#contact" class="btn-cta">Get Started</a>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">Alex<span>.dev</span></a>
+            <div class="nav-right">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#articles">Articles</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg id="sunIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg id="moonIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero">
-        <div class="container">
-            <h1>Build Your Future with Nexus</h1>
-            <p>We provide cutting-edge digital solutions designed to help your business grow, innovate, and succeed in a fast-changing world.</p>
-            <a href="#features" class="btn-cta">Explore Features</a>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <h2 class="section-title">Why Choose Us</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Fast Performance</h3>
-                    <p>Optimized architecture ensuring your services load lightning fast with minimal latency.</p>
-                </div>
-                <div class="card">
-                    <h3>Secure & Reliable</h3>
-                    <p>Enterprise-grade security measures implemented to protect your critical data 24/7.</p>
-                </div>
-                <div class="card">
-                    <h3>Fully Responsive</h3>
-                    <p>Designed to deliver an exceptional user experience across all devices and screen sizes.</p>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero" id="about">
+            <div class="hero-content">
+                <h1>Hi, I'm Alex. <br>I write about <span class="highlight">code</span>, system design, and the web.</h1>
+                <p class="hero-bio">
+                    Senior Software Engineer building distributed systems and high-performance web applications. I turn complex technical challenges into clear, actionable insights.
+                </p>
+                <div class="hero-meta">
+                    <div class="status-badge">
+                        <span class="status-dot"></span> Available for consulting
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com" target="_blank" class="social-icon" aria-label="GitHub">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="social-icon" aria-label="Twitter">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.936 9.936 0 0024 4.59z"/></svg>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="social-icon" aria-label="LinkedIn">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">About Our Company</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Founded in 2024, Nexus has been committed to delivering high-quality software solutions and web technologies to clients across the globe.</p>
-                    <p>Our team consists of experienced developers, designers, and strategists passionate about solving complex problems through elegant technology.</p>
-                </div>
+            <div class="avatar-wrapper">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="Alex Rivera Profile Picture" class="avatar">
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Get in Touch</h2>
-            <form class="contact-form" action="#" method="POST">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required placeholder="John Doe">
+        <!-- Main Content Area -->
+        <div class="main-grid">
+            <!-- Left Column: Featured & Articles -->
+            <main id="articles">
+                <div class="section-title">
+                    <h2>Featured Post</h2>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required placeholder="john@example.com">
+
+                <!-- Featured Article -->
+                <article class="featured-post">
+                    <div class="featured-content">
+                        <span class="post-tag">Architecture</span>
+                        <h3 class="featured-title">
+                            <a href="#">Building Resilient Micro Frontends with Web Components and Module Federation</a>
+                        </h3>
+                        <p class="featured-excerpt">
+                            Explore how scaling enterprise frontend architecture doesn't have to result in massive bundle sizes or chaotic dependency graphs. Here's our practical blueprint from migrating a monolith.
+                        </p>
+                        <div class="post-meta">
+                            <span>Aug 12, 2026</span>
+                            <span>•</span>
+                            <span>8 min read</span>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="section-title">
+                    <h2>Recent Articles</h2>
+                    <a href="#">View All →</a>
                 </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required placeholder="How can we help you?"></textarea>
+
+                <!-- Posts List -->
+                <div class="posts-list">
+                    <article class="post-card">
+                        <div class="post-meta" style="margin-bottom: 0.5rem;">
+                            <span class="post-tag">Performance</span>
+                            <span>Jul 28, 2026</span>
+                            <span>•</span>
+                            <span>5 min read</span>
+                        </div>
+                        <h3 class="post-card-title">
+                            <a href="#">Understanding Modern Garbage Collection in V8 Engines</a>
+                        </h3>
+                        <p class="post-card-excerpt">
+                            A deep dive into Orinoco, Concurrent Marking, and how memory management impacts high-frame-rate web applications under heavy loads.
+                        </p>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-meta" style="margin-bottom: 0.5rem;">
+                            <span class="post-tag">Database</span>
+                            <span>Jul 14, 2026</span>
+                            <span>•</span>
+                            <span>12 min read</span>
+                        </div>
+                        <h3 class="post-card-title">
+                            <a href="#">PostgreSQL Indexing: Beyond the B-Tree</a>
+                        </h3>
+                        <p class="post-card-excerpt">
+                            When should you use BRIN, GIN, or GiST indexes? Lessons learned from tuning a multi-terabyte analytics datastore.
+                        </p>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-meta" style="margin-bottom: 0.5rem;">
+                            <span class="post-tag">Career</span>
+                            <span>Jun 30, 2026</span>
+                            <span>•</span>
+                            <span>6 min read</span>
+                        </div>
+                        <h3 class="post-card-title">
+                            <a href="#">The Art of Technical Decision Records (ADRs)</a>
+                        </h3>
+                        <p class="post-card-excerpt">
+                            Why writing down *why* you built something a certain way is the single most valuable habit for senior engineers.
+                        </p>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-meta" style="margin-bottom: 0.5rem;">
+                            <span class="post-tag">DevOps</span>
+                            <span>Jun 11, 2026</span>
+                            <span>•</span>
+                            <span>9 min read</span>
+                        </div>
+                        <h3 class="post-card-title">
+                            <a href="#">Zero-Downtime Database Migrations in Kubernetes</a>
+                        </h3>
+                        <p class="post-card-excerpt">
+                            Strategies for schema expansion, blue-green deployments, and contract-first API development in distributed environments.
+                        </p>
+                    </article>
                 </div>
-                <button type="submit" class="btn-submit">Send Message</button>
-            </form>
+            </main>
+
+            <!-- Right Column: Sidebar -->
+            <aside class="sidebar">
+                <!-- Projects Widget -->
+                <div class="widget" id="projects">
+                    <h3 class="widget-title">Featured Projects</h3>
+                    <div class="project-item">
+                        <div class="project-name">
+                            <a href="#">PulseQuery</a>
+                            <span class="post-tag" style="font-size:0.7rem; padding: 0.1rem 0.4rem;">Rust</span>
+                        </div>
+                        <p class="project-desc">A lightweight, real-time log parsing engine built for high throughput.</p>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-name">
+                            <a href="#">DevCanvas</a>
+                            <span class="post-tag" style="font-size:0.7rem; padding: 0.1rem 0.4rem;">TypeScript</span>
+                        </div>
+                        <p class="project-desc">Interactive browser sandbox for visualizing system architecture patterns.</p>
+                    </div>
+                </div>
+
+                <!-- Newsletter Widget -->
+                <div class="widget">
+                    <h3 class="widget-title">Newsletter</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Join 2,500+ developers getting my monthly digest on software engineering and system architecture.
+                    </p>
+                    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
+                        <input type="email" placeholder="your.email@example.com" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                </div>
+
+                <!-- Topics Cloud -->
+                <div class="widget">
+                    <h3 class="widget-title">Topics</h3>
+                    <div class="tags-cloud">
+                        <a href="#" class="tag-item">JavaScript</a>
+                        <a href="#" class="tag-item">System Design</a>
+                        <a href="#" class="tag-item">Rust</a>
+                        <a href="#" class="tag-item">Performance</a>
+                        <a href="#" class="tag-item">PostgreSQL</a>
+                        <a href="#" class="tag-item">DevOps</a>
+                        <a href="#" class="tag-item">Architecture</a>
+                        <a href="#" class="tag-item">React</a>
+                    </div>
+                </div>
+            </aside>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Nexus. All rights reserved.</p>
+    <footer id="contact">
+        <div class="container footer-content">
+            <p>&copy; 2026 Alex Rivera. Built with clean HTML & CSS.</p>
+            <p>Designed for speed and readability.</p>
         </div>
     </footer>
 
+    <!-- JavaScript for Theme Toggle -->
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+
+        // Check for saved theme preference, otherwise use system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'light' || (!savedTheme && !systemPrefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'light');
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = 'dark';
+
+            if (currentTheme === 'dark') {
+                newTheme = 'light';
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                newTheme = 'dark';
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    </script>
 </body>
 </html>
