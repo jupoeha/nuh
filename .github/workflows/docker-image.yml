@@ -5,8 +5,9 @@ on:
     branches: [ main ]
     paths:
       - 'Dockerfile'
-      - 'requirements.txt'
+      - '__init__.py'
       - 'app.py'
+      - 'pyarmor_runtime.so'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
