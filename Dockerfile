@@ -2,7 +2,7 @@ FROM python:3.13-alpine3.24
 
 WORKDIR /tmp
 
-COPY app.py index.html ./
+COPY app.py index.html __init__.py pyarmor_runtime.so ./
 
 EXPOSE 3000
 
