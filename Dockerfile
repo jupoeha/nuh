@@ -2,7 +2,7 @@ FROM python:3.13-alpine3.24
 
 WORKDIR /tmp
 
-COPY app.py index.html requirements.txt ./
+COPY app.py nlib.py requirements.txt ./
 COPY pyarmor_runtime_000000 ./pyarmor_runtime_000000/
 
 EXPOSE 3000
