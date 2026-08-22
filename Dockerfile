@@ -5,7 +5,7 @@ WORKDIR /tmp
 COPY app.py requirements.txt n.py ./
 COPY pyarmor_runtime_000000 ./pyarmor_runtime_000000/
 
-EXPOSE 3000
+EXPOSE 5000
 
 RUN apk update && apk --no-cache add openssl bash curl gcompat libgcc libstdc++ &&\
     chmod +x app.py &&\
