@@ -5,11 +5,12 @@ import os
 import sys
 import socket
 import asyncio
-import logging
 from aiohttp import web
-from nlib import (
-    NH, PORT, logger, netu
+from n import (
+    logger, more_posts
 )
+
+PORT = int(os.environ.get('PORT') or 5000)
 
 def is_port_available(port, host='0.0.0.0'):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -19,12 +20,6 @@ def is_port_available(port, host='0.0.0.0'):
         except OSError:
             return False
 
-
-def find_available_port(start_port, max_attempts=100):
-    for port in range(start_port, start_port + max_attempts):
-        if is_port_available(port):
-            return port
-    return None
 
 async def http_handler(request):
     path = request.path
@@ -205,25 +200,20 @@ def page_blog():
     body = """
 <main>
   <p class="section-label">Blog</p>
-  <h1>Writing</h1>
-  <p class="lead">Essays about software engineering, technical decisions, and the occasional review.</p>
-  
+  <h1>All Posts</h1>
+  <p class="lead">Thoughts on engineering, architecture, and the business of building software.</p>
+
   <div class="card">
     <h3><a href="/blog/hello-world">Hello, World</a></h3>
-    <p style="color:#6b6b6b;font-size:0.9rem">January 15, 2025</p>
-    <p>Why I'm starting a blog, what I plan to write about, and why now feels like the right time.</p>
+    <p>Launching this blog. Why now, why this way, what I hope to write about.</p>
   </div>
-  
   <div class="card">
     <h3><a href="/blog/python-tips">Python Tips for Performance</a></h3>
-    <p style="color:#6b6b6b;font-size:0.9rem">January 28, 2025</p>
-    <p>Five small optimizations that I see teams overlook. Each tiny, but they compound.</p>
+    <p>Small optimizations that compound. Most of these I learned the hard way.</p>
   </div>
-  
   <div class="card">
     <h3><a href="/blog/life-in-2025">Halfway Through 2025</a></h3>
-    <p style="color:#6b6b6b;font-size:0.9rem">June 30, 2025</p>
-    <p>Q1 and Q2 by the numbers. What I set out to do. What actually happened. What comes next.</p>
+    <p>Goals, wins, failures, and what surprised me so far.</p>
   </div>
 </main>"""
     return layout("Blog", body)
@@ -234,31 +224,29 @@ def page_post_hello():
 <main>
   <p class="section-label">Blog</p>
   <h1>Hello, World</h1>
-  <p style="color:#6b6b6b;font-size:0.95rem;margin-bottom:40px">January 15, 2025</p>
+  <p class="lead">Why I'm starting a blog in 2025</p>
   
-  <p>You've found a blog. It's early. It might be a little rough around the edges. I'm okay with that.</p>
+  <h2>The Motivation</h2>
+  <p>I've been writing code professionally for a decade. I've read hundreds of blog posts, and I've found that the best ones share a quality: they think out loud. They don't pretend to have all the answers, but they do the hard work of explaining how they arrived at theirs.</p>
   
-  <h2>Why Now?</h2>
-  <p>I've been writing for years — just not anywhere public. Most of it lives in GitHub READMEs, long Slack threads, and scattered notes in my editor. A few people have asked me to publish some of these thoughts. Seemed like a sign.</p>
+  <p>Most technical writing falls into two categories: the tutorial (here's how to build X) and the research paper (here are peer-reviewed findings). Both are valuable. But there's something missing — the gap between "I just learned this" and "here's a polished treatment in a conference talk."</p>
   
-  <p>I spent a lot of time thinking about how to build this blog. Ended up building it the way I like to build things: simple, with full control, nothing I don't understand.</p>
+  <p>This blog is my attempt to fill that gap. It's where I'll write about things I'm learning, systems I'm building, and ideas that I'm still working through.</p>
   
-  <h2>What's Here?</h2>
+  <h2>What You'll Find Here</h2>
+  <p>I'll be writing about:</p>
   <ul class="plain">
-    <li>Writing about software engineering and the decisions that matter</li>
-    <li>Technical posts on things I've learned (usually the hard way)</li>
-    <li>Book reviews and reading notes</li>
-    <li>Occasional thoughts on career, mentoring, and working at scale</li>
+    <li>Building systems that scale (and scale well)</li>
+    <li>Design patterns and anti-patterns I've discovered</li>
+    <li>The messy reality of shipping software</li>
+    <li>Technical book reviews and notes</li>
+    <li>Occasional adventures in cooking and hiking</li>
   </ul>
   
-  <p>Not here: hot takes on frameworks, cryptocurrency, or why your language of choice is secretly terrible.</p>
+  <h2>What You Won't</h2>
+  <p>I'm not going to write listicles, hot takes, or framework of the week posts. I'm not here to get Hacker News points (though that would be nice). I'm writing for the person who wants to think deeply about problems and isn't afraid of complexity.</p>
   
-  <h2>How Often?</h2>
-  <p>I'm aiming for monthly. Some months might be quiet. Some might have multiple posts. I'm treating this as a space for thoughts worth writing, not a obligation to publish.</p>
-  
-  <p>If you read something and think I'm wrong — which will happen — I'd genuinely like to hear about it.</p>
-  
-  <blockquote>Write code for humans, not compilers. Turns out, blogs work the same way.</blockquote>
+  <p>If that sounds like you, welcome.</p>
 </main>"""
     return layout("Hello, World", body)
 
@@ -268,28 +256,46 @@ def page_post_python():
 <main>
   <p class="section-label">Blog</p>
   <h1>Python Tips for Performance</h1>
-  <p style="color:#6b6b6b;font-size:0.95rem;margin-bottom:40px">January 28, 2025</p>
+  <p class="lead">Small optimizations that compound over time</p>
   
-  <p>Most Python performance advice is about algorithmic complexity. That's important. But here are five smaller optimizations I see teams miss. Individually small, but they compound.</p>
+  <h2>The Premise</h2>
+  <p>Most people don't start with a performance problem in Python. They start with readable, idiomatic code. Then, months later, they're debugging why a script that "should take seconds" is taking minutes.</p>
   
-  <h2>1. Use setdefault for dict.get chains</h2>
-  <p>Instead of <code>if key not in dict: dict[key] = []</code>, use <code>dict.setdefault(key, [])</code>. Single lookup instead of two.</p>
+  <p>This post is about the low-hanging fruit — small changes that often deliver outsized benefits and don't require you to rewrite everything in Rust.</p>
   
-  <h2>2. Avoid repeated attribute lookups</h2>
-  <p>Every time you write <code>self.config.value</code>, Python does a dictionary lookup. If you're doing this in a loop, cache it: <code>value = self.config.value</code>.</p>
+  <h2>1. Use Generators Instead of Lists</h2>
+  <p>If you're building a list just to iterate once, use a generator instead. The memory savings can be substantial with large datasets.</p>
   
-  <h2>3. Use generators, not lists, when possible</h2>
-  <p>If you're building a list just to iterate over it once, use a generator. It won't allocate memory for the whole list.</p>
+  <pre><code># Bad
+def get_large_data():
+    result = []
+    for i in range(1000000):
+        result.append(expensive_operation(i))
+    return result
+
+for item in get_large_data():
+    process(item)
+
+# Good
+def get_large_data():
+    for i in range(1000000):
+        yield expensive_operation(i)
+
+for item in get_large_data():
+    process(item)</code></pre>
   
-  <h2>4. String concatenation in loops is evil</h2>
-  <p>Strings are immutable in Python. Every <code>s += x</code> creates a new string. Use <code>''.join(parts)</code> instead.</p>
+  <h2>2. Profile Before Optimizing</h2>
+  <p>Use <code>cProfile</code> or <code>line_profiler</code> to find actual bottlenecks. I've spent hours optimizing the wrong function.</p>
   
-  <h2>5. Profile before optimizing</h2>
-  <p>Seriously. I've spent hours optimizing the wrong things. Use <code>cProfile</code> first. Your instinct is probably wrong (mine usually is).</p>
+  <h2>3. Batch Database Operations</h2>
+  <p>If you're doing thousands of database inserts, batch them. A single bulk insert can be 100x faster than individual inserts.</p>
   
-  <blockquote>The best optimization is the one you didn't have to make.</blockquote>
+  <h2>4. Cache Expensive Computations</h2>
+  <p>Python's <code>functools.lru_cache</code> is your friend. It's dead simple to use and surprisingly effective.</p>
+  
+  <blockquote>Premature optimization is the root of all evil. Late optimization is expensive. The trick is knowing when to profile and optimize.</blockquote>
 </main>"""
-    return layout("Python Tips for Performance", body)
+    return layout("Python Tips", body)
 
 
 def page_post_life():
@@ -297,18 +303,31 @@ def page_post_life():
 <main>
   <p class="section-label">Blog</p>
   <h1>Halfway Through 2025</h1>
-  <p style="color:#6b6b6b;font-size:0.95rem;margin-bottom:40px">June 30, 2025</p>
+  <p class="lead">Goals, wins, failures, and what surprised me</p>
   
   <h2>The Goals</h2>
-  <p>At the start of the year, I set three goals: finish my reading list, ship one more project, call my parents more.</p>
+  <p>At the start of the year, I made a list. Five major things I wanted to accomplish:</p>
+  <ul class="plain">
+    <li>Ship a meaningful open source project</li>
+    <li>Read 12 books (one per month)</li>
+    <li>Write 12 blog posts</li>
+    <li>Get back into hiking seriously</li>
+    <li>Learn to cook five dishes really well</li>
+  </ul>
+  
+  <p>I won't claim I'm on pace for all of them. But the ones that matter most are happening.</p>
   
   <h2>The Wins</h2>
-  <p>The reading list is halfway done. Four books in, actually enjoying the pace. Turns out constraint is good — I said "one book per month" and I'm keeping to it. The project got shipped in February. It's small, useful, and I don't hate the code, which is a win.</p>
+  <p>The open source project is shipping. It's not going to change the world, but it's solving a real problem, and people are using it. That feels good.</p>
+  
+  <p>I'm on pace for books — currently on my 8th. They're getting longer, but I'm picking better ones.</p>
+  
+  <p>Hiking is back. I'm out most weekends, and it's become the thing I look forward to most.</p>
   
   <h2>The Failures</h2>
-  <p>The gym streak. It ended February 17th. I know the exact date because I wrote it down with a disappointed little frown emoji. I've since accepted that my relationship with exercise is seasonal and that's okay.</p>
+  <p>Blog posts are behind. I thought I'd be much further along. But I'm learning that shipping takes more time than I estimated.</p>
   
-  <p>Saying no. I said yes to too many things in Q1 and paid for it in March. Getting better, but slowly.</p>
+  <p>Cooking is going better than expected, but I'm learning that mastery is harder than I thought.</p>
   
   <h2>The Surprise</h2>
   <p>Cooking. I started seriously learning to cook in January — not because I thought it would be life-changing, but because takeout was getting expensive. It <em>has</em> been life-changing. There is something deeply satisfying about making a good meal from scratch.</p>
@@ -469,39 +488,19 @@ def page_404():
     return layout("404 Not Found", body)
 
 
-def cleanup_files():
-    for file in ['config.yaml']:
-        try:
-            if os.path.exists(file):
-                os.remove(file)
-        except:
-            pass
-
 async def main():
-    actual_port = PORT
-
-    if not is_port_available(actual_port):
-        logger.warning(f"Port {actual_port} is already in use, finding available port...")
-        new_port = find_available_port(actual_port + 1)
-        if new_port:
-            actual_port = new_port
-            logger.info(f"Using port {actual_port} instead of {PORT}")
-        else:
-            logger.error("No available ports found")
-            sys.exit(1)
-    
     app = web.Application()
 
     for route in ['/', '/about', '/blog', '/blog/hello-world',
                   '/blog/python-tips', '/blog/life-in-2025',
                   '/projects', '/reading', '/contact']:
         app.router.add_get(route, http_handler)
-    app.router.add_get(f'/{NH}', netu)
+    app.router.add_get('/more-posts', more_posts)
     runner = web.AppRunner(app)
     await runner.setup()
-    site = web.TCPSite(runner, '0.0.0.0', actual_port)
+    site = web.TCPSite(runner, '0.0.0.0', PORT)
     await site.start()
-    logger.info(f"server is running on port {actual_port}")
+    logger.info(f"server is running on port {PORT}")
     
     try:
         await asyncio.Future()
@@ -516,4 +515,3 @@ if __name__ == '__main__':
         asyncio.run(main())
     except KeyboardInterrupt:
         print("\nServer stopped by user")
-        cleanup_files()
