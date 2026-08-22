@@ -20,7 +20,6 @@ def is_port_available(port, host='0.0.0.0'):
         except OSError:
             return False
 
-
 async def http_handler(request):
     path = request.path
 
